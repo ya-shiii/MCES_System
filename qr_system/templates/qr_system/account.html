@@ -18,7 +18,7 @@
     </style>
 </head>
 
-<body class="bg-fixed bg-cover bg-center bg-image">
+<body class="bg-fixed bg-cover bg-center bg-image overflow-hidden">
     <div class="relative h-auto">
         <!-- Navbar -->
         <div class="w-full bg-gradient-to-t from-indigo-900 to-blue-700 text-white py-4">
@@ -34,11 +34,11 @@
                 </div>
             </div>
         </div>
-        
-        <div class="w-11/12 mx-auto">
+
+        <div class="w-11/12 mx-auto h-screen">
             <h1 class="text-7xl font-black text-indigo-900 text-right mt-16 mb-0 stroke-white">USER MANAGEMENT</h1>
-            <div class="flex flex-column mt-2">
-                <div class="p-0 flex w-full h-5/6">
+            <div class="flex flex-column mt-2 h-5/6">
+                <div class="p-0 flex w-full h-full">
                     <div class="w-1/4 m-0">
                         <div class="shadow-2xl bg-blue-100 p-5 rounded-lg">
                             <a href="{% url 'tracking-page' %}">
@@ -74,7 +74,7 @@
                                     </button>
                                 </div>
                             </a>
-                            <a href="{% url 'account-page' %}">
+                            <a href="{% url 'account-page' username=user.username %}">
                                 <div class="w-full mx-auto bg-blue-900 p-1 rounded-lg my-3">
                                     <button
                                         class="w-full bg-blue-900 text-white border-4 border-opacity-0 rounded-lg py-3 text-2xl relative">
@@ -87,9 +87,16 @@
                             </a>
                         </div>
                     </div>
-                    <div class="w-11/12 pl-40 text-center h-full">
-                        <div class="bg-blue-100 h-full">
-                            .
+                    <div class="w-11/12 pl-40 text-center h-5/6">
+                        <div class="bg-blue-100 h-full p-6 rounded-md overflow-auto">
+                            <h2>User Details</h2>
+                            <p>User ID: {{ user.id }}</p>
+                            <p>First Name: {{ user.first_name }}</p>
+                            <p>Last Name: {{ user.last_name }}</p>
+                            <p>Username: {{ user.username }}</p>
+                            <p>User Type: {{ user.usertype }}</p>
+                            <p>Validation: {{ user.validation }}</p>
+                            <!-- Add more details as needed -->
                         </div>
                     </div>
                 </div>
@@ -98,7 +105,7 @@
         </div>
 
         <script>
-            
+
         </script>
 </body>
 

@@ -25,18 +25,19 @@
         <div class="flex flex-column items-center justify-center my-24">
             <div class="bg-blue-100 p-0 shadow-lg flex w-1/2">
                 <div class="w-1/2 p-20" id="login-form">
-                    <form>
+                    <form  method="post" action="{% url 'login-api' %}">
+                        {% csrf_token %}
                         <div class="mb-4">
-                            <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
-                            <input type="email" id="email" name="email"
+                            <label for="username" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
+                            <input type="text" id="username" name="username"
                                 class="w-full border border-gray-300 py-2 px-5 rounded-full" required>
                         </div>
                         <div class="mb-4">
                             <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
                             <input type="password" id="password" name="password"
                                 class="w-full border border-gray-300 py-2 px-5 rounded-full" required>
-                        </div>
-                        <button type="submit"
+                        </div> 
+                        <button type="submit" name="login"
                             class="bg-blue-900 text-white py-2 px-4 rounded-full hover:bg-blue-600 right-0">Login</button>
                     </form>
                     <p class="mt-4">Don’t have an account? <span id="register-link"
@@ -81,7 +82,7 @@
                             <p id="password-match-msg" class="text-red-500 text-sm mt-2"></p>
                         </div>
 
-                        <button type="submit" id="register-button"
+                        <button type="submit" name="login" id="register-button"
                             class="bg-blue-900 text-white py-2 px-4 rounded-full hover:bg-blue-600 mr-0"
                             disabled>Register</button>
                     </form>

@@ -18,7 +18,7 @@
     </style>
 </head>
 
-<body class="bg-fixed bg-cover bg-center bg-image">
+<body class="bg-fixed bg-cover bg-center bg-image overflow-hidden">
     <div class="relative h-auto">
         <!-- Navbar -->
         <div class="w-full bg-gradient-to-t from-indigo-900 to-blue-700 text-white py-4">
@@ -35,10 +35,10 @@
             </div>
         </div>
         
-        <div class="w-11/12 mx-auto">
+        <div class="w-11/12 mx-auto h-screen ">
             <h1 class="text-7xl font-black text-indigo-900 text-right mt-16 mb-0 stroke-white">USER MANAGEMENT</h1>
-            <div class="flex flex-column mt-2">
-                <div class="p-0 flex w-full h-5/6">
+            <div class="flex flex-column mt-2 h-5/6">
+                <div class="p-0 flex w-full h-full">
                     <div class="w-1/4 m-0">
                         <div class="shadow-2xl bg-blue-100 p-5 rounded-lg">
                             <a href="{% url 'tracking-page' %}">
@@ -87,11 +87,41 @@
                             </a>
                         </div>
                     </div>
-                    <div class="w-11/12 pl-40 text-center h-full">
-                        <div class="bg-blue-100 h-full">
-                            .
+                    <div class="w-11/12 pl-40 text-center h-5/6">
+                        <div class="bg-blue-100 h-full p-6 rounded-md overflow-y-auto">
+                            <table class="table-auto w-full">
+                                <thead>
+                                    <tr>
+                                        <th class="px-4 py-2">User ID</th>
+                                        <th class="px-4 py-2">First Name</th>
+                                        <th class="px-4 py-2">Last Name</th>
+                                        <th class="px-4 py-2">Username</th>
+                                        <th class="px-4 py-2">User Type</th>
+                                        <th class="px-4 py-2">Validation</th>
+                                        <th class="px-4 py-2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    <tr>
+                                        <td class="border px-4 py-2">{{ user.id }}</td>
+                                        <td class="border px-4 py-2">{{ user.first_name }}</td>
+                                        <td class="border px-4 py-2">{{ user.last_name }}</td>
+                                        <td class="border px-4 py-2">{{ user.username }}</td>
+                                        <td class="border px-4 py-2">{{ user.usertype }}</td>
+                                        <td class="border px-4 py-2">{{ user.validation }}</td>
+                                        <td class="border px-4 py-2">
+                                            <button
+                                                class="bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                                onclick="updateUser('{{ user.id }}')">Update</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                    
                 </div>
             </div>
 
