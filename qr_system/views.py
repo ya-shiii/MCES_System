@@ -1,47 +1,41 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import *
 from .models import Logs, Item, User
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 
 @csrf_exempt
-def login_or_register(request):
+def login_view(request):
     if request.method == 'POST':
-        # Assuming that the 'username' field is used for both login and registration
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
-        if 'register' in request.POST:
-            # Registration logic
-            first_name = request.POST.get('first-name')
-            last_name = request.POST.get('last-name')
-            email = request.POST.get('new-email')
 
-            # You might want to add more validation logic here
+        user = authenticate(request, username=username, password=password)
 
-            # Create a new user
-            user = User.objects.create_user(username=username, password=password,
-                                            first_name=first_name, last_name=last_name, email=email)
-            
-            # Log in the new user
+        if user is not None:
             login(request, user)
-            
-            return JsonResponse({'status': 'success', 'message': 'Registration successful', 'username': username})
-        elif 'login' in request.POST:
-            # Login logic
-            user = authenticate(request, username=username, password=password)
+            return JsonResponse({'status': 'success', 'message': 'Login successful', 'username': username})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Invalid credentials'})
 
-            if user is not None:
-                login(request, user)
-                return JsonResponse({'status': 'success', 'message': 'Login successful', 'username': username})
-            else:
-                return JsonResponse({'status': 'error', 'message': 'Invalid credentials', 'username': username})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
-    # Render login page if not a POST request or if there's an issue
-    return render(request, 'qr_system/login.html')  # Update with your actual template path
+@login_required
+def protected_view(request):
+    return JsonResponse({'status': 'success', 'message': 'You are authenticated'})
 
+@login_required
+def logout_view(request):
+    logout(request)
+    return JsonResponse({'status': 'success', 'message': 'Logout successful'})
+
+# Example of a protected view that requires authentication
+@login_required
+def protected_view(request):
+    return JsonResponse({'status': 'success', 'message': 'You are authenticated'})
 
 def login(request):
     return render(request, 'qr_system/login.html')
