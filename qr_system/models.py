@@ -13,7 +13,6 @@ class Item(models.Model):
     def __str__(self):
         return f"{self.item_name} (ID: {self.item_id}) (Quantity: {self.quantity} | Available: {self.available} | Borrowed: {self.borrowed})"
 
-
 class Logs(models.Model):
     log_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=100)
@@ -23,7 +22,6 @@ class Logs(models.Model):
 
     def __str__(self):
         return f"Log ID: {self.log_id} | User ID: {self.username} | Item ID: {self.item_id} | Event: {self.event} | Date/Time: {self.date_time}"
-
 
 class User(AbstractUser):
     USER_TYPE_CHOICES = [
@@ -56,3 +54,5 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} (ID: {self.username}, UserType: {self.usertype})"
+
+

@@ -63,3 +63,5 @@ def account(request, username):
     return render(request, 'qr_system/account.html', {'users': users})
 
 
+
+
